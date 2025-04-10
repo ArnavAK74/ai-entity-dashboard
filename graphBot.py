@@ -76,7 +76,7 @@ In a single sentence, clearly answer the user's question and concisely present t
 Round any numbers to 3 decimal places and present the information returned from the query nicely visually. 
 If there are more than 10 connections, return the top 10 most relevant parts of the cypher query as a numbered list, based on the user's question and your best judgement.
 Do not convert to percentages, leave as decimal values.
-Come up with an interesting, relevant insight based off the resulting query after listing the connections.
+Come up with an interesting, relevant insight based off the resulting query after listing the connections. Understand that this cypher query is from a social network built from a sample dataset of news headlines related to AI and does not fully represent society. 
 
 If the response does not work, tell the user there was an error and to try again.
 """
