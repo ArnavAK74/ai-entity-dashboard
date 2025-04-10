@@ -1,7 +1,7 @@
 import logging
 import requests
 from neo4j import GraphDatabase
-import os
+import streamlit as st
 # === Configuration ===
 
 NEO4J_URI = 'neo4j+s://7734d3c5.databases.neo4j.io'
@@ -54,7 +54,7 @@ def summarize_result_with_llm(user_input: str, raw_result: str) -> str:
     """
     Uses OpenAI to summarize the Neo4j query result in natural language.
     """
-    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    OPENAI_API_KEY = st.secrets[openai][OPENAI_API_KEY]
     if not OPENAI_API_KEY:
         return "❌ OPENAI_API_KEY not set."
 
