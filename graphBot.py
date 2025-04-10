@@ -8,7 +8,7 @@ NEO4J_URI = 'neo4j+s://7734d3c5.databases.neo4j.io'
 NEO4J_USER = 'neo4j'
 NEO4J_PASSWORD = '1FyxVVdsr-By5mjKLI_ipkQ2qFLnd-lGgT0qvx8rrNs'
 
-GROQ_LLM_API_URL = 'http://127.0.0.1:5004/convert'  # or your hosted endpoint
+GROQ_LLM_API_URL = 'https://llm-cypher-api.onrender.com'  # or your hosted endpoint
 
 # === Setup Logging ===
 logging.basicConfig(level=logging.INFO)
