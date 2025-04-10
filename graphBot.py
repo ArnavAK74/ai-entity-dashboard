@@ -72,7 +72,10 @@ The Cypher query was run and returned:
 
 {raw_result}
 
-Clearly answer the user's question and concisely present the information returned by the Cypher query.
+In a single sentence, clearly answer the user's question and concisely present the information returned by the Cypher query. Do not mention the cypher query.
+Round any numbers to 3 decimal places and present the information returned from the query nicely visually.
+
+
 """
 
     payload = {
