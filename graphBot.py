@@ -50,27 +50,6 @@ def run_cypher_query(query: str) -> str:
         logger.error(f"Error executing Cypher query: {e}")
         return f"An error occurred: {e}"
 
-
-def ask_bot(user_input: str) -> str:
-    """
-    Full pipeline: Natural language → Cypher → Neo4j → Summary.
-    """
-    logger.info(f"User input: {user_input}")
-    
-    cypher = groq_llm_to_cypher(user_input)
-    if not cypher:
-        return "❌ Could not generate Cypher query."
-    
-    logger.info(f"Cypher: {cypher}")
-    raw_result = run_cypher_query(cypher)
-    
-    if "No results found." in raw_result or "error" in raw_result.lower():
-        return raw_result
-    
-    summary = summarize_result_with_llm(user_input, raw_result)
-    return summary
-
-
 def summarize_result_with_llm(user_input: str, raw_result: str) -> str:
     """
     Uses OpenAI to summarize the Neo4j query result in natural language.
@@ -112,3 +91,26 @@ Clearly answer the user's question and concisely present the information returne
     except Exception as e:
         logger.error(f"Error summarizing result: {e}")
         return "❌ Could not generate summary."
+
+
+def ask_bot(user_input: str) -> str:
+    """
+    Full pipeline: Natural language → Cypher → Neo4j → Summary.
+    """
+    logger.info(f"User input: {user_input}")
+    
+    cypher = groq_llm_to_cypher(user_input)
+    if not cypher:
+        return "❌ Could not generate Cypher query."
+    
+    logger.info(f"Cypher: {cypher}")
+    raw_result = run_cypher_query(cypher)
+    
+    if "No results found." in raw_result or "error" in raw_result.lower():
+        return raw_result
+    
+    summary = summarize_result_with_llm(user_input, raw_result)
+    return summary
+
+
+
