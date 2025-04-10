@@ -1,7 +1,7 @@
 import logging
 import requests
 from neo4j import GraphDatabase
-
+import os
 # === Configuration ===
 
 NEO4J_URI = 'neo4j+s://7734d3c5.databases.neo4j.io'
