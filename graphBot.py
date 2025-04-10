@@ -53,12 +53,62 @@ def run_cypher_query(query: str) -> str:
 
 def ask_bot(user_input: str) -> str:
     """
-    Full pipeline: Converts user input → Cypher → executes on Neo4j → returns results.
+    Full pipeline: Natural language → Cypher → Neo4j → Summary.
     """
     logger.info(f"User input: {user_input}")
+    
     cypher = groq_llm_to_cypher(user_input)
     if not cypher:
         return "❌ Could not generate Cypher query."
+    
     logger.info(f"Cypher: {cypher}")
-    result = run_cypher_query(cypher)
-    return result
+    raw_result = run_cypher_query(cypher)
+    
+    if "No results found." in raw_result or "error" in raw_result.lower():
+        return raw_result
+    
+    summary = summarize_result_with_llm(user_input, raw_result)
+    return summary
+
+
+def summarize_result_with_llm(user_input: str, raw_result: str) -> str:
+    """
+    Uses OpenAI to summarize the Neo4j query result in natural language.
+    """
+    OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+    if not OPENAI_API_KEY:
+        return "❌ OPENAI_API_KEY not set."
+
+    headers = {
+        "Authorization": f"Bearer {OPENAI_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    prompt = f"""
+A user asked:
+
+{user_input}
+
+The Cypher query was run and returned:
+
+{raw_result}
+
+Clearly answer the user's question and concisely present the information returned by the Cypher query.
+"""
+
+    payload = {
+        "model": "gpt-3.5-turbo-16k",
+        "messages": [
+            {"role": "user", "content": prompt.strip()}
+        ],
+        "temperature": 0.5
+    }
+
+    try:
+        response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=20)
+        response.raise_for_status()
+        summary = response.json()["choices"][0]["message"]["content"].strip()
+        return summary
+    except Exception as e:
+        logger.error(f"Error summarizing result: {e}")
+        return "❌ Could not generate summary."
