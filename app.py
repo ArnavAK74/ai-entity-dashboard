@@ -7,7 +7,7 @@ st.title("🌐 AI Entity Influence Graph")
 
 # Graph Section
 st.markdown("### 🔗 AI Entity Network")
-st.markdown("Visualize the relationships between AI-related entities and topics.")
+st.markdown("Visualize the relationships between AI-related entities and topics from 18,000 AI-related news headlines for the RAISE-25 Data Science/AI Competition.")
 st.markdown("Scroll down for an interactive AI Agent to query the graph and explain relationships in natural language.")
 # Load HTML graph
 try:
