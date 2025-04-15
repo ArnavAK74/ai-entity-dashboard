@@ -22,7 +22,7 @@ st.markdown("---")
 # Chatbot Section
 st.markdown("### 💬 Ask the AI Graph Bot")
 st.markdown("You can ask questions like:")
-st.code("Who is most connected to OpenAI?\nWhat’s the relation between Google and Microsoft?\nTell me about France in the graph.\nFind the shortest path between Yann LeCun and Elon Musk(If it exists)")
+st.code("Who is most connected to OpenAI?\nWhat’s are the top 5 connections to Trump?\nTell me about France in the graph.\nFind the shortest path between Yann LeCun and Elon Musk")
 
 user_input = st.text_input("Ask a question about the AI network:", key="chat_input")
 
